@@ -71,7 +71,6 @@ spring:
   
 # Database Settings
   datasource:
-    datasource:
     url: jdbc:postgresql://http://academydb-c6-s3-t2-do-user-12484302-0.j.db.ondigitalocean.com/:25060/weatherDB
     username: doadmin
     password: AVNS_rbprmaa-Ff5w-Icj9EP

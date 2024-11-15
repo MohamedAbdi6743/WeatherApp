@@ -68,7 +68,7 @@ public class Country implements Serializable {
 	public City addCity(City city) {
 
 		this.getCities().add(city);
-		// city.setCountry(this);
+		city.setCountry(this);
 
 		return city;
 	}

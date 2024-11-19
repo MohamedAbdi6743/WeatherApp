@@ -2,6 +2,7 @@ package com.bptn.weatherapp.service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,5 +68,16 @@ public class UserService {
 
 		return user;
 
+	}
+
+	public void sendResetPasswordEmail(String emailId) {
+
+		Optional<User> op = this.userRepository.findByEmailId(emailId);
+
+		if (op.isPresent()) {
+			this.emailService.sendResetPasswordEmail(op.get());
+		} else {
+			logger.debug("Email doesn't exist, {}", emailId);
+		}
 	}
 }

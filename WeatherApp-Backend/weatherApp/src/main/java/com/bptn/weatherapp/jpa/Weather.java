@@ -240,7 +240,7 @@ public class Weather implements Serializable {
 				+ ", sunrise=" + sunrise + ", sunset=" + sunset + ", temp=" + temp + ", tempMax=" + tempMax
 				+ ", tempMin=" + tempMin + ", updatedOn=" + updatedOn + ", visibility=" + visibility
 				+ ", weatherStatusId=" + weatherStatusId + ", windDirection=" + windDirection + ", windSpeed="
-				+ windSpeed + ", user=" + user + "]";
+				+ windSpeed + "]";
 	}
 
 }

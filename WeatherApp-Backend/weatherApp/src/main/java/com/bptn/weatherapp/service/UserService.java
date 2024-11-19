@@ -1,20 +1,29 @@
 package com.bptn.weatherapp.service;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 import java.sql.Timestamp;
 import java.time.Instant;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bptn.weatherapp.exception.domain.EmailExistException;
+import com.bptn.weatherapp.exception.domain.EmailNotVerifiedException;
 import com.bptn.weatherapp.exception.domain.UserNotFoundException;
 import com.bptn.weatherapp.exception.domain.UsernameExistException;
 import com.bptn.weatherapp.jpa.User;
+import com.bptn.weatherapp.provider.ResourceProvider;
 import com.bptn.weatherapp.repository.UserRepository;
+import com.bptn.weatherapp.security.JwtService;
 
 @Service
 public class UserService {
@@ -29,6 +38,15 @@ public class UserService {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
+
+	@Autowired
+	AuthenticationManager authenticationManager;
+
+	@Autowired
+	JwtService jwtService;
+
+	@Autowired
+	ResourceProvider provider;
 
 	private void validateUsernameAndEmail(String username, String emailId) {
 
@@ -81,5 +99,32 @@ public class UserService {
 		user.setEmailVerified(true);
 
 		this.userRepository.save(user);
+	}
+
+	private static User isEmailVerified(User user) {
+
+		if (user.getEmailVerified().equals(false)) {
+			throw new EmailNotVerifiedException(String.format("Email requires verification, %s", user.getEmailId()));
+		}
+
+		return user;
+	}
+
+	private Authentication authenticate(String username, String password) {
+		return this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+	}
+
+	public User authenticate(User user) {
+
+		this.authenticate(user.getUsername(), user.getPassword());
+
+		return this.userRepository.findByUsername(user.getUsername()).map(UserService::isEmailVerified).get();
+	}
+
+	public HttpHeaders generateJwtHeader(String username) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(AUTHORIZATION, this.jwtService.generateJwtToken(username, this.provider.getJwtExpiration()));
+
+		return headers;
 	}
 }

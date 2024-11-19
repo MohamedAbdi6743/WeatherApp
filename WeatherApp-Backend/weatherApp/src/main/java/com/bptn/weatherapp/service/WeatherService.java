@@ -2,6 +2,7 @@ package com.bptn.weatherapp.service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,8 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.bptn.weatherapp.exception.domain.CityNotFoundException;
+import com.bptn.weatherapp.exception.domain.UserNotFoundException;
 import com.bptn.weatherapp.jpa.City;
 import com.bptn.weatherapp.jpa.Country;
+import com.bptn.weatherapp.jpa.User;
 import com.bptn.weatherapp.jpa.Weather;
 import com.bptn.weatherapp.provider.ResourceProvider;
 import com.bptn.weatherapp.repository.CityRepository;
@@ -170,5 +173,19 @@ public class WeatherService {
 		logger.debug("Weather: {}", weather);
 
 		return weather;
+	}
+
+	public List<Weather> getWeathers() {
+
+		// Retrieve username
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+		// Get user from username
+		User user = this.userRepository.findByUsername(username)
+				.orElseThrow(() -> new UserNotFoundException(String.format("Username doesn't exist, %s", username)));
+
+		// Return latest 10 weather data entries
+		return this.weatherRepository.findFirst10ByUserOrderByWeatherIdDesc(user);
+
 	}
 }

@@ -7,10 +7,12 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bptn.weatherapp.exception.domain.EmailExistException;
+import com.bptn.weatherapp.exception.domain.UserNotFoundException;
 import com.bptn.weatherapp.exception.domain.UsernameExistException;
 import com.bptn.weatherapp.jpa.User;
 import com.bptn.weatherapp.repository.UserRepository;
@@ -80,4 +82,17 @@ public class UserService {
 			logger.debug("Email doesn't exist, {}", emailId);
 		}
 	}
+
+	public void resetPassword(String password) {
+
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+		User user = this.userRepository.findByUsername(username)
+				.orElseThrow(() -> new UserNotFoundException(String.format("Username doesn't exist, %s", username)));
+
+		user.setPassword(this.passwordEncoder.encode(password));
+
+		this.userRepository.save(user);
+	}
+
 }

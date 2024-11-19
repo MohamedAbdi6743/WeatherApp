@@ -4,6 +4,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -126,5 +127,29 @@ public class UserService {
 		headers.add(AUTHORIZATION, this.jwtService.generateJwtToken(username, this.provider.getJwtExpiration()));
 
 		return headers;
+	}
+
+	public void resetPassword(String password) {
+
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+		User user = this.userRepository.findByUsername(username)
+				.orElseThrow(() -> new UserNotFoundException(String.format("Username doesn't exist, %s", username)));
+
+		user.setPassword(this.passwordEncoder.encode(password));
+
+		this.userRepository.save(user);
+
+	}
+
+	public void sendResetPasswordEmail(String emailId) {
+
+		Optional<User> op = this.userRepository.findByEmailId(emailId);
+
+		if (op.isPresent()) {
+			this.emailService.sendResetPasswordEmail(op.get());
+		} else {
+			logger.debug("Email doesn't exist, {}", emailId);
+		}
 	}
 }

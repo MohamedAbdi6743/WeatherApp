@@ -79,4 +79,12 @@ public class EmailService {
 			this.logger.error("Error sending email to Username: " + user.getUsername(), ex);
 		}
 	}
+
+	@Async
+	public void sendResetPasswordEmail(User user) {
+
+		this.sendEmail(user, this.provider.getClientResetParam(), "reset_password", "Reset your password",
+				this.provider.getClientResetExpiration());
+	}
+
 }

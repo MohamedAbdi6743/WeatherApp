@@ -264,4 +264,13 @@ public class UserControllerTest {
 
 	}
 
+	@Test
+	@Order(8)
+	public void resetPasswordEmailIntegrationTest() throws Exception {
+
+		/* Check the Rest End Point Response */
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/user/reset/{}", this.user.getEmailId()))
+				.andExpect(status().isOk());
+	}
+
 }

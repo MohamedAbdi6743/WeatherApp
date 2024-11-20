@@ -273,4 +273,33 @@ public class UserControllerTest {
 				.andExpect(status().isOk());
 	}
 
+	@Test
+	@Order(9)
+	public void resetPasswordIntegrationTest() throws Exception {
+
+		// Retrieve user from the database
+		Optional<User> optUser = this.userRepository.findByUsername(this.user.getUsername());
+
+		// Check that the encrypted initial password of the user matches the password
+		// stored in the database
+		assertTrue(this.passwordEncoder.matches(this.user.getPassword(), optUser.get().getPassword()));
+
+		// Generate a token
+		String jwt = String.format("Bearer %s", this.jwtService.generateJwtToken(this.user.getUsername(), 10_000));
+
+		// Send a POST request and check the End point response
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/user/reset").param("password", this.otherPassword)
+				.header("AUTHORIZATION", jwt)).andExpect(status().isOk());
+
+		// Check if the user still exists in the database
+		Optional<User> opt = this.userRepository.findByUsername(this.user.getUsername());
+
+		// Verify that the user was successfully retrieved from the database
+		assertTrue(opt.isPresent(), "User Should Exist");
+
+		// Check that the encrypted newly updated password matches with the password in
+		// the database
+		assertTrue(this.passwordEncoder.matches(this.otherPassword, opt.get().getPassword()));
+	}
+
 }

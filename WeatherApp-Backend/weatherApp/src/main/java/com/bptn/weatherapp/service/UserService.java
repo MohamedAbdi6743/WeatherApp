@@ -53,23 +53,23 @@ public class UserService {
 
 		// Check if Username exists
 		this.userRepository.findByUsername(username).ifPresent(x -> {
-			throw new UsernameExistException(String.format("Username already exist, Username - %s", x.getUsername()));
+			throw new UsernameExistException(String.format("Username already exists, %s", x.getUsername()));
 		});
 
 		// Check if email address exists
 		this.userRepository.findByEmailId(emailId).ifPresent(x -> {
-			throw new EmailExistException(String.format("EmailId already exist, Email - %s", x.getEmailId()));
+			throw new EmailExistException(String.format("Email already exists, %s", x.getEmailId()));
 		});
 	}
 
 	public User signup(User user) {
 
-		// Set username and password values to lowercase characters
+		// Set username and email values to lowercase characters
 		user.setUsername(user.getUsername().toLowerCase());
 		user.setEmailId(user.getEmailId().toLowerCase());
 
-		// Validate if username or password exist
-		this.validateUsernameAndEmail(user.getUsername(), user.getPassword());
+		// Validate if username or email exist
+		this.validateUsernameAndEmail(user.getUsername(), user.getEmailId());
 
 		// Set emailVerified to a default value, false
 		user.setEmailVerified(false);

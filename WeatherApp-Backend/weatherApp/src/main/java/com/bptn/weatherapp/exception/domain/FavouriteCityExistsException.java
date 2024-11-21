@@ -7,5 +7,4 @@ public class FavouriteCityExistsException extends RuntimeException {
 	public FavouriteCityExistsException(String message) {
 		super(message);
 	}
-
 }

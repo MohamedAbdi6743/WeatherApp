@@ -34,6 +34,10 @@ import com.bptn.weatherapp.exception.domain.CityNotFoundException;
 import com.bptn.weatherapp.exception.domain.EmailExistException;
 import com.bptn.weatherapp.exception.domain.EmailNotFoundException;
 import com.bptn.weatherapp.exception.domain.EmailNotVerifiedException;
+import com.bptn.weatherapp.exception.domain.FavouriteCityExistsException;
+import com.bptn.weatherapp.exception.domain.FavouriteCityMaxReachedException;
+import com.bptn.weatherapp.exception.domain.FavouriteCityNotFoundException;
+import com.bptn.weatherapp.exception.domain.FavouriteCityNotUserException;
 import com.bptn.weatherapp.exception.domain.UserNotFoundException;
 import com.bptn.weatherapp.exception.domain.UsernameExistException;
 
@@ -158,5 +162,25 @@ public class ExceptionHandling implements ErrorController {
 	@GetMapping(ERROR_PATH)
 	public ResponseEntity<HttpResponse> notFound404() throws Exception {
 		return this.createHttpResponse(NOT_FOUND, NO_MAPPING_EXIST_URL);
+	}
+
+	@ExceptionHandler(FavouriteCityExistsException.class)
+	public ResponseEntity<HttpResponse> FavouriteCityExistsException(FavouriteCityExistsException ex) {
+		return this.createHttpResponse(BAD_REQUEST, ex.getMessage());
+	}
+
+	@ExceptionHandler(FavouriteCityMaxReachedException.class)
+	public ResponseEntity<HttpResponse> FavouriteCityMaxReachedException(FavouriteCityMaxReachedException ex) {
+		return this.createHttpResponse(BAD_REQUEST, ex.getMessage());
+	}
+
+	@ExceptionHandler(FavouriteCityNotFoundException.class)
+	public ResponseEntity<HttpResponse> FavouriteCityNotFoundException(FavouriteCityNotFoundException ex) {
+		return this.createHttpResponse(BAD_REQUEST, ex.getMessage());
+	}
+
+	@ExceptionHandler(FavouriteCityNotUserException.class)
+	public ResponseEntity<HttpResponse> FavouriteCityNotUserException(FavouriteCityNotUserException ex) {
+		return this.createHttpResponse(BAD_REQUEST, ex.getMessage());
 	}
 }

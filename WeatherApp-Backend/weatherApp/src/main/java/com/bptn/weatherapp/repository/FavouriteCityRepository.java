@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.bptn.weatherapp.jpa.City;
+import com.bptn.weatherapp.jpa.FavouriteCity;
 import com.bptn.weatherapp.jpa.User;
 
 public interface FavouriteCityRepository extends JpaRepository<FavouriteCity, Integer> {

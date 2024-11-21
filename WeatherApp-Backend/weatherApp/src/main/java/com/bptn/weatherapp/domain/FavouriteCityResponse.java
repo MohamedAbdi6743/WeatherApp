@@ -2,6 +2,8 @@ package com.bptn.weatherapp.domain;
 
 import java.util.List;
 
+import com.bptn.weatherapp.jpa.FavouriteCity;
+
 public class FavouriteCityResponse {
 
 	List<FavouriteCity> favouriteCities;

@@ -32,12 +32,12 @@ public class FavouriteCity implements Serializable {
 	@ManyToOne
 	@JsonManagedReference
 	@JoinColumn(name = "\"cityId\"")
-	private Integer cityId;
+	private City cityId;
 
 	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "\"userId\"")
-	private Integer userId;
+	private User userId;
 
 	public FavouriteCity() {
 	}
@@ -58,19 +58,19 @@ public class FavouriteCity implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public Integer getCityId() {
+	public City getCityId() {
 		return cityId;
 	}
 
-	public void setCityId(Integer cityId) {
+	public void setCityId(City cityId) {
 		this.cityId = cityId;
 	}
 
-	public Integer getUserId() {
+	public User getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(User userId) {
 		this.userId = userId;
 	}
 

@@ -51,7 +51,7 @@ public class City implements Serializable {
 	private List<Weather> weathers;
 
 	@JsonBackReference
-	@OneToMany(mappedBy = "city")
+	@OneToMany(mappedBy = "cityId")
 	private List<FavouriteCity> favouriteCity;
 
 	public City() {

@@ -11,9 +11,9 @@ import com.bptn.weatherapp.jpa.User;
 
 public interface FavouriteCityRepository extends JpaRepository<FavouriteCity, Integer> {
 
-	List<FavouriteCity> findFavouriteCitiesByUser(User user);
+	List<FavouriteCity> findFavouriteCitiesByUserId(User userId);
 
-	Optional<FavouriteCity> findByUserAndCity(User user, City city);
+	Optional<FavouriteCity> findByUserIdAndCityId(User userId, City cityId);
 
-	long countByUser(User user);
+	long countByUserId(User userId);
 }

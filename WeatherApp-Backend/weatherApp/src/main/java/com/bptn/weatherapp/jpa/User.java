@@ -56,7 +56,7 @@ public class User implements Serializable {
 	private List<Weather> weathers;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "userId", fetch = FetchType.EAGER)
 	private List<FavouriteCity> favouriteCity;
 
 	public User() {

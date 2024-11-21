@@ -38,3 +38,6 @@ h2.server:
     -tcpAllowOthers, 
     -tcpPort, 
     9091
+    
+# Maximum Number Of Favourite Cities Per User
+max_favourite_cities: 8

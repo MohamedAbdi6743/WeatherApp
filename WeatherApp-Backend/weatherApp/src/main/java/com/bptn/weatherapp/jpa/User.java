@@ -55,6 +55,10 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Weather> weathers;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	private List<FavouriteCity> favouriteCity;
+
 	public User() {
 
 	}
@@ -131,19 +135,27 @@ public class User implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", username="
-				+ username + ", password=" + password + ", phone=" + phone + ", emailId=" + emailId + ", emailVerified="
-				+ emailVerified + ", createdOn=" + createdOn + ", weathers=" + weathers + "]";
-	}
-
 	public List<Weather> getWeathers() {
 		return weathers;
 	}
 
 	public void setWeathers(List<Weather> weathers) {
 		this.weathers = weathers;
+	}
+
+	public List<FavouriteCity> getFavouriteCity() {
+		return favouriteCity;
+	}
+
+	public void setFavouriteCity(List<FavouriteCity> favouriteCity) {
+		this.favouriteCity = favouriteCity;
+	}
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", username="
+				+ username + ", password=" + password + ", phone=" + phone + ", emailId=" + emailId + ", emailVerified="
+				+ emailVerified + ", createdOn=" + createdOn + ", weathers=" + weathers + "]";
 	}
 
 }

@@ -50,6 +50,14 @@ public class City implements Serializable {
 	@OneToMany(mappedBy = "city")
 	private List<Weather> weathers;
 
+	@JsonBackReference
+	@OneToMany(mappedBy = "city")
+	private List<FavouriteCity> favouriteCity;
+
+	public City() {
+
+	}
+
 	public Integer getCityId() {
 		return cityId;
 	}
@@ -114,15 +122,19 @@ public class City implements Serializable {
 		this.weathers = weathers;
 	}
 
+	public List<FavouriteCity> getFavouriteCity() {
+		return favouriteCity;
+	}
+
+	public void setFavouriteCity(List<FavouriteCity> favouriteCity) {
+		this.favouriteCity = favouriteCity;
+	}
+
 	@Override
 	public String toString() {
 		return "City [cityId=" + cityId + ", latitude=" + latitude + ", longitude=" + longitude + ", name=" + name
 				+ ", timezone=" + timezone + ", weatherCityId=" + weatherCityId + ", country=" + country + ", weathers="
 				+ weathers + "]";
-	}
-
-	public City() {
-
 	}
 
 }

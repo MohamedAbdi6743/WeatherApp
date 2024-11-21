@@ -58,6 +58,9 @@ public class ResourceProvider {
 	@Value("${h2.server.params}")
 	private String[] h2ServerParams;
 
+	@Value("${max_favourite_cities}")
+	private long maxFavouriteCities;
+
 	public String getJwtSecret() {
 		return jwtSecret;
 	}
@@ -120,5 +123,9 @@ public class ResourceProvider {
 
 	public String[] getH2ServerParams() {
 		return h2ServerParams;
+	}
+
+	public long getMaxFavouriteCities() {
+		return maxFavouriteCities;
 	}
 }

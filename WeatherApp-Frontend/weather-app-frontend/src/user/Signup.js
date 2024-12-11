@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import BPTN from "../images/BPTN.png";
+import { signUpApi } from "../util/ApiUtil";
 
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
@@ -24,9 +25,26 @@ import {
 const Signup = () => {
   const [open, setOpen] = useState(false);
 
-  const onFormSubmit = async (values) => {
+  const onFormSubmit = async (values, actions) => {
     console.log(values);
-    toast("Congratulations on successfully signing up!!");
+    const apiResponse = await signUpApi(
+      values.firstName,
+      values.lastName,
+      values.username,
+      values.phone,
+      values.email,
+      values.password
+    );
+
+    if (apiResponse.status === 1) {
+      toast(
+        `Congratulations on successfully signing up!! Verification email has been sent to ${values.email}`
+      );
+    } else {
+      toast(apiResponse.payLoad);
+    }
+    //Reset Form Fields
+    actions.resetForm();
   };
 
   //handle toggle for Eye icon for password
@@ -70,8 +88,8 @@ const Signup = () => {
         firstName: "",
         lastName: "",
         username: "",
-        email: "",
         phone: "",
+        email: "",
         password: "",
       }}
       validationSchema={SignupSchema}

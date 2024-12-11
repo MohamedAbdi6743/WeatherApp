@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 
 import App from "./App";
-import { AppContextProvider } from "./context/AppContext";
 import { Toaster } from "react-hot-toast";
+import AppContextProvider from "./Context/applicationContext";
 import { BrowserRouter as Router } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

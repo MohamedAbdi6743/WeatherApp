@@ -16,7 +16,7 @@ const App = () => {
 
       <Route exact path="/resetEmailLink" element={<ResetEmailLink />} />
 
-      <Route exact path="/verify" element={<VerifyEmail />} />
+      <Route exact path="/verify/:verificationCode" element={<VerifyEmail />} />
 
       <Route path="*" element={<Navigate to="/login" Replace />} />
     </Routes>

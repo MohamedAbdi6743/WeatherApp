@@ -46,6 +46,26 @@ export const signUpApi = async (
   }
 };
 
+export const resetEmailLinkApi = async (emailId) => {
+  let response = frameResponse();
+
+  try {
+    const url = `${API_BASE_URL}/user/reset/${emailId}`;
+    const apiResponse = await axios.get(url);
+
+    if (apiResponse.status === 200) {
+      response = frameResponse(1);
+    }
+  } catch (err) {
+    if (err.response) {
+      response = frameResponse(0, err.response.data.message);
+    }
+    console.log(err);
+  } finally {
+    return response;
+  }
+};
+
 export const loginApi = async (username, password) => {
   let response = frameResponse();
   try {

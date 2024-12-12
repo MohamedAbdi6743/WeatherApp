@@ -60,6 +60,15 @@ export const loginApi = async (username, password) => {
         username: apiResponse.data.username,
       };
       response = frameResponse(1, payLoad);
+    }
+  } catch (err) {
+    if (err.response) {
+      response = frameResponse(0, err.response.data.message);
+    }
+  } finally {
+    return response;
+  }
+};
 
 export const verifyEmailApi = async (token) => {
   let response = frameResponse();

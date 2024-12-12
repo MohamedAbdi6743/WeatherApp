@@ -22,6 +22,7 @@ export const signUpApi = async (
   password
 ) => {
   let response = frameResponse();
+
   try {
     const url = `${API_BASE_URL}/user/signup`;
     const apiResponse = await axios.post(url, {
@@ -59,11 +60,23 @@ export const loginApi = async (username, password) => {
         username: apiResponse.data.username,
       };
       response = frameResponse(1, payLoad);
+
+export const verifyEmailApi = async (token) => {
+  let response = frameResponse();
+
+  try {
+    const url = `${API_BASE_URL}/user/verify/email`;
+    const headers = { Authorization: frameToken(token) };
+    const apiResponse = await axios.get(url, { headers: headers });
+
+    if (apiResponse.status === 200) {
+      response = frameResponse(1, apiResponse.data);
     }
   } catch (err) {
     if (err.response) {
       response = frameResponse(0, err.response.data.message);
     }
+    console.log(err);
   } finally {
     return response;
   }

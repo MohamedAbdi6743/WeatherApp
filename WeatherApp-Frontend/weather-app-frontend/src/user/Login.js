@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { use, useState, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import BPTN from "../images/BPTN.png";
@@ -14,12 +14,28 @@ import {
   PASSWORD_MAX_LENGTH,
 } from "../common/constants";
 
+import { loginApi } from "../util/ApiUtil";
+import { AppContext } from "../Context/applicationContext";
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
+  let navigate = useNavigate();
+  const appContext = useContext(AppContext);
+
   const [open, setOpen] = useState(false);
 
-  const onFormSubmit = async (values) => {
-    console.log(values);
-    toast.success("Login successful.Check console.log for values");
+  const onFormSubmit = async (values, action) => {
+    const apiResponse = await loginApi(values.username, values.password);
+    const payLoad = apiResponse.payLoad;
+
+    if (apiResponse.status === 1) {
+      appContext.setSession(payLoad);
+      console.log(payLoad);
+      toast("Login successful");
+    } else {
+      action.resetForm();
+      toast(apiResponse.payLoad);
+    }
   };
 
   const toggle = () => {

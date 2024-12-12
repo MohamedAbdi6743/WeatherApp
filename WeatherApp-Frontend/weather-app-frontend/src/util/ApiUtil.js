@@ -44,3 +44,27 @@ export const signUpApi = async (
     return response;
   }
 };
+
+export const loginApi = async (username, password) => {
+  let response = frameResponse();
+  try {
+    const url = `${API_BASE_URL}/user/login`;
+    const apiResponse = await axios.post(url, {
+      username,
+      password,
+    });
+    if (apiResponse.status === 200) {
+      const payLoad = {
+        token: apiResponse.headers.authorization,
+        username: apiResponse.data.username,
+      };
+      response = frameResponse(1, payLoad);
+    }
+  } catch (err) {
+    if (err.response) {
+      response = frameResponse(0, err.response.data.message);
+    }
+  } finally {
+    return response;
+  }
+};

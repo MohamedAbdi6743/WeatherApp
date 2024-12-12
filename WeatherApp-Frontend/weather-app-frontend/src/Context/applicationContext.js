@@ -1,7 +1,7 @@
 import React from "react";
 import { useCookies } from "react-cookie";
 
-const AppContext = React.createContext();
+export const AppContext = React.createContext();
 
 const AppContextProvider = ({ children }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);

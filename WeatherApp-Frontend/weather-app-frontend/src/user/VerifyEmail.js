@@ -5,13 +5,22 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
+import { verifyEmailApi } from "../util/ApiUtil";
+
 const VerifyEmail = () => {
   const { verificationCode } = useParams(); //useParams hook to get the verification code passed in via the URL
   let navigate = useNavigate(); //useNavigate hook which helps us to redirect to the respective route
 
   const onFormSubmit = async (values) => {
     console.log(values);
-    toast("Email verification code is present in console.log");
+
+    const apiResponse = await verifyEmailApi(values.verificationCode);
+    if (apiResponse.status === 1) {
+      navigate("/login");
+      toast("Congratulations your email has been successfully verified");
+    } else {
+      toast(apiResponse.payLoad);
+    }
   };
 
   const emailVerificationSchema = Yup.object().shape({

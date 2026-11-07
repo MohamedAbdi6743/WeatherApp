@@ -1,14 +1,11 @@
 import React from "react";
-import { ImSpinner8 } from "react-icons/im";
+import { FiLoader } from "react-icons/fi";
 
-const LoadingIndicator = () => {
-  return (
-    <div className="min-h-screen bg-gradientBg bg-no-repeat bg-cover bg-center flex flex-col justify-center items-center">
-      <div className="flex justify-center items-center h-500">
-        <ImSpinner8 className="text-5xl animate-spin text-white" />
-      </div>
-    </div>
-  );
-};
+const LoadingIndicator = ({ label = "Loading…" }) => (
+  <div className="flex min-h-screen items-center justify-center bg-canvas" role="status">
+    <FiLoader className="h-6 w-6 animate-spin text-ink-subtle" aria-hidden="true" />
+    <span className="sr-only">{label}</span>
+  </div>
+);
 
 export default LoadingIndicator;

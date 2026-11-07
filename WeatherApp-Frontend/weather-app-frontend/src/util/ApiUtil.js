@@ -111,6 +111,28 @@ export const verifyEmailApi = async (token) => {
   }
 };
 
+// token comes from the reset-password email link
+export const resetPasswordApi = async (token, password) => {
+  let response = frameResponse();
+
+  try {
+    await axios.post(`${API_BASE_URL}/user/reset`, null, {
+      params: { password },
+      headers: { Authorization: frameToken(token) },
+    });
+    response = frameResponse(1);
+  } catch (err) {
+    if (err.response) {
+      response = frameResponse(
+        0,
+        err.response.data?.message || "This reset link is invalid or has expired."
+      );
+    }
+    console.log(err);
+  }
+  return response;
+};
+
 // Calls a protected endpoint with the user's JWT.
 // status: 1 = success, 0 = error, -1 = token expired/invalid (caller should log out)
 const authRequest = async (method, path, token) => {

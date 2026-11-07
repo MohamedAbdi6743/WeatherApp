@@ -6,6 +6,7 @@ import App from "./App";
 import { Toaster } from "react-hot-toast";
 import AppContextProvider from "./Context/applicationContext";
 import { BrowserRouter as Router } from "react-router-dom";
+import { toasterOptions } from "./ui/notify";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,14 +14,6 @@ root.render(
     <Router>
       <App />
     </Router>
-    <Toaster
-      toastOptions={{
-        duration: 5000,
-        style: {
-          background: "#7e0bdb",
-          color: "#fff",
-        },
-      }}
-    />
+    <Toaster position="top-center" toastOptions={toasterOptions} />
   </AppContextProvider>
 );

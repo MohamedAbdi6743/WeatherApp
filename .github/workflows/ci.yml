@@ -5,17 +5,23 @@ on:
     branches:
       - main
 
+# The default token is read-only; publishing test results needs to create a check run.
+permissions:
+  contents: read
+  checks: write
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: "17"
           distribution: "temurin"
+          cache: maven
 
       - name: Build and test with Maven
         env:
@@ -23,7 +29,7 @@ jobs:
         run: mvn -B clean test --file WeatherApp-Backend/weatherApp/pom.xml
 
       - name: Publish test results
-        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always() # report results even when tests fail
+        uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           files: "**/surefire-reports/TEST-*.xml"
-          format: junit

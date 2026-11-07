@@ -108,8 +108,8 @@ const Signup = () => {
           <Form>
             <div className="mt-4">
               <label
-                class="block text-purple-700 text-md mb-2 text-left"
-                for="grid-first-name"
+                className="block text-purple-700 text-md mb-2 text-left"
+                htmlFor="grid-first-name"
               >
                 First Name
               </label>
@@ -128,8 +128,8 @@ const Signup = () => {
             </div>
             <div className="mt-4">
               <label
-                class="block text-purple-700 text-md mb-2 text-left"
-                for="grid-first-name"
+                className="block text-purple-700 text-md mb-2 text-left"
+                htmlFor="grid-first-name"
               >
                 Last Name
               </label>
@@ -148,8 +148,8 @@ const Signup = () => {
             </div>
             <div className="mt-4">
               <label
-                class="block text-purple-700 text-md mb-2 text-left"
-                for="grid-first-name"
+                className="block text-purple-700 text-md mb-2 text-left"
+                htmlFor="grid-first-name"
               >
                 Username
               </label>
@@ -168,8 +168,8 @@ const Signup = () => {
             </div>
             <div className="mt-4">
               <label
-                class="block text-purple-700 text-md mb-2 text-left"
-                for="grid-first-name"
+                className="block text-purple-700 text-md mb-2 text-left"
+                htmlFor="grid-first-name"
               >
                 Phone
               </label>
@@ -188,8 +188,8 @@ const Signup = () => {
             </div>
             <div className="mt-4">
               <label
-                class="block text-purple-700 text-md mb-2 text-left"
-                for="grid-first-name"
+                className="block text-purple-700 text-md mb-2 text-left"
+                htmlFor="grid-first-name"
               >
                 Email
               </label>
@@ -208,8 +208,8 @@ const Signup = () => {
             </div>
             <div className="mt-4">
               <label
-                class="block text-purple-700 text-md mb-2 text-left"
-                for="grid-first-name"
+                className="block text-purple-700 text-md mb-2 text-left"
+                htmlFor="grid-first-name"
               >
                 Password
               </label>
@@ -255,7 +255,7 @@ const Signup = () => {
           <div className="my-6 space-y-2">
             <div className="flex items-center justify-center w-full p-2 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-400 focus:ring-violet-400">
               <p>Powered by</p>
-              <img className="w-20 h-10" src={BPTN} />
+              <img alt="BPTN" className="w-20 h-10" src={BPTN} />
             </div>
           </div>
         </div>

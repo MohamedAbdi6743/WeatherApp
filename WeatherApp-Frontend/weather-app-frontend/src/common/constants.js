@@ -1,4 +1,5 @@
-export const API_BASE_URL = "http://localhost:8080";
+export const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:8081";
 
 export const FIRSTNAME_MIN_LENGTH = 3;
 export const FIRSTNAME_MAX_LENGTH = 40;

@@ -1,9 +1,9 @@
-import React, { use, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import BPTN from "../images/BPTN.png";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
@@ -16,13 +16,17 @@ import {
 
 import { loginApi } from "../util/ApiUtil";
 import { AppContext } from "../Context/applicationContext";
-import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  let navigate = useNavigate();
   const appContext = useContext(AppContext);
+  const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
+
+  // Already logged in: skip the login form
+  if (appContext.getSession()) {
+    return <Navigate to="/home" replace />;
+  }
 
   const onFormSubmit = async (values, action) => {
     const apiResponse = await loginApi(values.username, values.password);
@@ -30,8 +34,8 @@ const Login = () => {
 
     if (apiResponse.status === 1) {
       appContext.setSession(payLoad);
-      console.log(payLoad);
       toast("Login successful");
+      navigate("/home", { replace: true });
     } else {
       action.resetForm();
       toast(apiResponse.payLoad);
@@ -49,7 +53,7 @@ const Login = () => {
       .required("User Name cannot be empty"),
     password: Yup.string()
       .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
       )
       .min(PASSWORD_MIN_LENGTH, "Too Short!")
@@ -84,8 +88,8 @@ const Login = () => {
           <Form>
             <div className="mt-4">
               <label
-                class="block text-purple-700 text-md mb-2 text-left"
-                for="grid-first-name"
+                className="block text-purple-700 text-md mb-2 text-left"
+                htmlFor="grid-first-name"
               >
                 Username
               </label>
@@ -106,8 +110,8 @@ const Login = () => {
 
             <div className="mt-4">
               <label
-                class="block text-purple-700 text-md mb-2 text-left"
-                for="grid-first-name"
+                className="block text-purple-700 text-md mb-2 text-left"
+                htmlFor="grid-first-name"
               >
                 Password
               </label>
@@ -164,7 +168,7 @@ const Login = () => {
           <div className="my-6 space-y-2">
             <div className="flex items-center justify-center w-full p-2 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-400 focus:ring-violet-400">
               <p>Powered by</p>
-              <img className="w-20 h-10" src={BPTN} />
+              <img alt="BPTN" className="w-20 h-10" src={BPTN} />
             </div>
           </div>
         </div>

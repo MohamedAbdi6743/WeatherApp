@@ -11,7 +11,9 @@ management.endpoints:
 # Active Profile
 spring:
   profiles:
-    active: prod
+    # The remote Postgres server (prod/default) no longer exists, so run on in-memory H2 by default.
+    # Set SPRING_PROFILES_ACTIVE=prod to use a real Postgres database.
+    active: test
 
 # DevTools Enabled     
   devtools:
@@ -98,8 +100,9 @@ spring:
 
 # Test Profile
 
+# 8081 because port 8080 is commonly taken by Apache/XAMPP
 server:
-  port: 8080
+  port: 8081
   
 spring:
   config:

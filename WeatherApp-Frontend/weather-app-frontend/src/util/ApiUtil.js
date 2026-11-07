@@ -110,3 +110,42 @@ export const verifyEmailApi = async (token) => {
     return response;
   }
 };
+
+// Calls a protected endpoint with the user's JWT.
+// status: 1 = success, 0 = error, -1 = token expired/invalid (caller should log out)
+const authRequest = async (method, path, token) => {
+  let response = frameResponse();
+
+  try {
+    const apiResponse = await axios({
+      method,
+      url: `${API_BASE_URL}${path}`,
+      headers: { Authorization: frameToken(token) },
+    });
+    response = frameResponse(1, apiResponse.data);
+  } catch (err) {
+    if (err.response) {
+      const status = err.response.status;
+      response = frameResponse(
+        status === 401 || status === 403 ? -1 : 0,
+        err.response.data?.message || "Something went wrong. Please try again."
+      );
+    }
+    console.log(err);
+  }
+  return response;
+};
+
+export const getWeatherApi = (token, city) =>
+  authRequest("get", `/weathers/${encodeURIComponent(city)}/true`, token);
+
+export const getWeathersApi = (token) => authRequest("get", "/weathers", token);
+
+export const getFavouriteCitiesApi = (token) =>
+  authRequest("get", "/favouritecity", token);
+
+export const addFavouriteCityApi = (token, cityId) =>
+  authRequest("post", `/favouritecity/${cityId}`, token);
+
+export const deleteFavouriteCityApi = (token, favouriteCityId) =>
+  authRequest("delete", `/favouritecity/${favouriteCityId}`, token);

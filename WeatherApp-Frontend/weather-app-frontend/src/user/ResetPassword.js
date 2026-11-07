@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import toast from "react-hot-toast";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 import { PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH } from "../common/constants";
@@ -11,8 +11,6 @@ import { PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH } from "../common/constants";
 const ResetPassword = () => {
   const [open, setOpen] = useState(false);
   const { verificationToken } = useParams();
-
-  let navigate = useNavigate();
 
   const onFormSubmit = async (values) => {
     toast("Token and password is displayed in console.log");
@@ -27,7 +25,7 @@ const ResetPassword = () => {
   const ResetPasswordSchema = Yup.object().shape({
     password: Yup.string()
       .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
         "Must contain 8 characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
       )
       .min(PASSWORD_MIN_LENGTH, "Too Short!")
@@ -36,7 +34,7 @@ const ResetPassword = () => {
 
     confirmPassword: Yup.string()
       .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
         "Must contain 8 characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
       )
       .min(PASSWORD_MIN_LENGTH, "Too Short!")
@@ -68,8 +66,8 @@ const ResetPassword = () => {
           <Form>
             <div className="mt-4">
               <label
-                class="block text-purple-700 text-md mb-2 text-left"
-                for="grid-first-name"
+                className="block text-purple-700 text-md mb-2 text-left"
+                htmlFor="grid-first-name"
               >
                 Enter your New Password
               </label>
@@ -95,8 +93,8 @@ const ResetPassword = () => {
             </div>
             <div className="mt-4">
               <label
-                class="block text-purple-700 text-md mb-2 text-left"
-                for="grid-first-name"
+                className="block text-purple-700 text-md mb-2 text-left"
+                htmlFor="grid-first-name"
               >
                 Confirm Password
               </label>

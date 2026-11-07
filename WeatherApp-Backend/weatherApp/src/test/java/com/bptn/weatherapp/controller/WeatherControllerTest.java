@@ -117,8 +117,8 @@ public class WeatherControllerTest {
 				.andExpect(jsonPath("$.sunset", is("2023-01-13 17:02:57"))) // Hard-coded Date/Time in EST
 				.andExpect(jsonPath("$.temp", is(-2.2))).andExpect(jsonPath("$.tempMax", is(-1.34)))
 				.andExpect(jsonPath("$.tempMin", is(-2.81))).andExpect(jsonPath("$.visibility", is(2816)))
-				.andExpect(jsonPath("$.weatherStatusId", is(601))).andExpect(jsonPath("$.windDirection", is(10.29)))
-				.andExpect(jsonPath("$.windSpeed", is(340))).andExpect(jsonPath("$.city.cityId", is(1)))
+				.andExpect(jsonPath("$.weatherStatusId", is(601))).andExpect(jsonPath("$.windDirection", is(340)))
+				.andExpect(jsonPath("$.windSpeed", is(10.29))).andExpect(jsonPath("$.city.cityId", is(1)))
 				.andExpect(jsonPath("$.city.latitude", is(43.7001)))
 				.andExpect(jsonPath("$.city.longitude", is(-79.4163))).andExpect(jsonPath("$.city.name", is("Toronto")))
 				.andExpect(jsonPath("$.city.timezone", is("-18000")))
@@ -150,8 +150,8 @@ public class WeatherControllerTest {
 		assertEquals("-2.81", opt.get().getTempMin().toString());
 		assertEquals("2816.00", opt.get().getVisibility().toString());
 		assertEquals(601, opt.get().getWeatherStatusId());
-		assertEquals("10.29", opt.get().getWindDirection().toString());
-		assertEquals("340.00", opt.get().getWindSpeed().toString());
+		assertEquals("340.00", opt.get().getWindDirection().toString());
+		assertEquals("10.29", opt.get().getWindSpeed().toString());
 		assertEquals(1, opt.get().getCity().getCityId());
 		assertEquals("43.7001", opt.get().getCity().getLatitude().toString());
 		assertEquals("-79.4163", opt.get().getCity().getLongitude().toString());
@@ -205,7 +205,7 @@ public class WeatherControllerTest {
 				.andExpect(jsonPath("$.[9].temp", is(-2.2))).andExpect(jsonPath("$.[9].tempMax", is(-1.34)))
 				.andExpect(jsonPath("$.[9].tempMin", is(-2.81))).andExpect(jsonPath("$.[9].visibility", is(2816.0)))
 				.andExpect(jsonPath("$.[9].weatherStatusId", is(601)))
-				.andExpect(jsonPath("$.[9].windDirection", is(10.29))).andExpect(jsonPath("$.[9].windSpeed", is(340.0)))
+				.andExpect(jsonPath("$.[9].windDirection", is(340.0))).andExpect(jsonPath("$.[9].windSpeed", is(10.29)))
 				.andExpect(jsonPath("$.[9].city.cityId", is(1))).andExpect(jsonPath("$.[9].city.latitude", is(43.7001)))
 				.andExpect(jsonPath("$.[9].city.longitude", is(-79.4163)))
 				.andExpect(jsonPath("$.[9].city.name", is("Toronto")))

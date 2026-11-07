@@ -5,10 +5,10 @@ import static org.springframework.security.config.Customizer.withDefaults;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -64,6 +64,7 @@ public class WebSecurityConfig {
 	}
 
 	@Bean("test")
+	@Profile("test")
 	SecurityFilterChain securityFilterChainTest(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
 
 		http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -78,7 +79,7 @@ public class WebSecurityConfig {
 	}
 
 	@Bean
-	@ConditionalOnMissingBean(SecurityFilterChain.class)
+	@Profile("!test")
 	SecurityFilterChain securityFilterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
 
 		http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

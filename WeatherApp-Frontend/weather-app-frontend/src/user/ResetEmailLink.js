@@ -48,8 +48,8 @@ const ResetEmailLink = () => {
           <Form>
             <div className="mt-4">
               <label
-                class="block text-purple-700 text-md mb-2 text-left"
-                for="grid-first-name"
+                className="block text-purple-700 text-md mb-2 text-left"
+                htmlFor="grid-first-name"
               >
                 Enter your email
               </label>

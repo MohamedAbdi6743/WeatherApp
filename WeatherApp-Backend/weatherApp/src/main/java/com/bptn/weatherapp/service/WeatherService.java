@@ -101,9 +101,11 @@ public class WeatherService {
 		weather.setTemp(rootNode.get("main").get("temp").decimalValue());
 		weather.setTempMax(rootNode.get("main").get("temp_max").decimalValue());
 		weather.setTempMin(rootNode.get("main").get("temp_min").decimalValue());
-		weather.setVisibility(rootNode.get("visibility").decimalValue());
-		weather.setWindDirection(rootNode.get("wind").get("speed").decimalValue());
-		weather.setWindSpeed(rootNode.get("wind").get("deg").decimalValue());
+		// visibility is sometimes missing from the API response
+		JsonNode visibility = rootNode.path("visibility");
+		weather.setVisibility(visibility.isNumber() ? visibility.decimalValue() : null);
+		weather.setWindDirection(rootNode.get("wind").get("deg").decimalValue());
+		weather.setWindSpeed(rootNode.get("wind").get("speed").decimalValue());
 		weather.setUpdatedOn(new Timestamp(System.currentTimeMillis()));
 
 		Optional<City> optCity = this.cityRepository.findByWeatherCityId(rootNode.get("id").asInt());

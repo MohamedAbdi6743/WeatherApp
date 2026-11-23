@@ -1,0 +1,14 @@
+# OS and editor files
+.DS_Store
+.project
+.idea/
+.vscode/
+FETCH_HEAD
+
+# Build output
+bin/
+target/
+node_modules/
+
+# Local secrets
+.env

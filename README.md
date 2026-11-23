@@ -6,7 +6,7 @@ A full-stack weather app. You create an account, verify your email, log in, and 
 - **Frontend:** React 19 with Tailwind CSS
 - **Weather data:** [OpenWeather](https://openweathermap.org/current) current weather API
 
-I built it as my capstone project at BPTN / Obsidi Academy.
+Built as a three-person capstone project at BPTN / Obsidi Academy by [Mohamed Abdi](https://github.com/MohamedAbdi6743), [Umukulthum Arowolo](https://github.com/Umukulthum) and [Mohammed Ahmed](https://github.com/mahmed097).
 
 ---
 
@@ -88,6 +88,25 @@ The app opens at **http://localhost:3000**.
 
 Settings live in two files under `WeatherApp-Backend/weatherApp/src/main/resources/`.
 
+### Environment variables
+
+Secrets are never stored in the repo. They're read from environment variables (see [`.env.example`](.env.example)):
+
+| Variable | Needed for | Default if unset |
+| --- | --- | --- |
+| `OPENWEATHER_API_KEY` | Weather searches. Get a free key at [openweathermap.org](https://home.openweathermap.org/api_keys) | none, so searches fail |
+| `JWT_SECRET` | Signing login tokens | a local-dev-only value. **Always set it outside your machine** |
+| `MAIL_USERNAME`, `MAIL_PASSWORD` | Sending verification and reset emails (Gmail needs an app password) | none, so emails aren't sent |
+| `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` | The `prod` profile's PostgreSQL | `jdbc:postgresql://localhost:5432/weatherDB` |
+
+Example on macOS / Linux:
+
+```bash
+export OPENWEATHER_API_KEY=your-key
+export JWT_SECRET=$(openssl rand -base64 64)
+./mvnw spring-boot:run
+```
+
 **`application.yml`**
 
 | Setting | What it does |
@@ -118,7 +137,7 @@ REACT_APP_API_BASE_URL=http://localhost:9000 npm start
 ### Profiles
 
 - **`test`** (default): in-memory H2 database, tables are created on startup and dropped on shutdown. The H2 console is available at http://localhost:8081/h2-console (JDBC URL `jdbc:h2:mem:testdb`, user `sa`, password `sa123#`).
-- **`prod`**: PostgreSQL with `ddl-auto: validate`, so the tables must already exist. The Postgres server this was originally pointed at has been shut down, so you'll need to put your own database details in `application.yml` before using it.
+- **`prod`**: PostgreSQL with `ddl-auto: validate`, so the tables must already exist. The Postgres server this was originally pointed at has been shut down, so set `DB_URL`, `DB_USERNAME` and `DB_PASSWORD` to your own database before using it.
 
 To run with the prod profile:
 
@@ -202,6 +221,5 @@ The login cookie lasts 15 minutes. Log in again.
 
 ## Known limitations
 
-- **Secrets are in the repo.** The email password, database password, JWT secret and OpenWeather key are written in plain text in the YAML files. If you fork or deploy this, replace them and load them from environment variables instead.
 - **The new password goes in the URL.** The password reset endpoint takes it as a query parameter, so it can end up in server logs. It should move into the request body.
 - **Times are shown in Toronto time,** not the searched city's local time.

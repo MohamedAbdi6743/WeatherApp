@@ -26,8 +26,8 @@ spring:
 
 # Email Settings
   mail:
-    username: Umukulthum01@gmail.com
-    password: wciuqczszhculvqg
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
     host: smtp.gmail.com
     port: 587
     protocol: smtp
@@ -65,9 +65,9 @@ spring:
         
 # Database Settings
   datasource:
-    url: jdbc:postgresql://academydb-c6-s3-t2-do-user-12484302-0.j.db.ondigitalocean.com:25060/weatherDB
-    username: doadmin
-    password: AVNS_rbprmaa-Ff5w-Icj9EP
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/weatherDB}
+    username: ${DB_USERNAME:}
+    password: ${DB_PASSWORD:}
     hikari:
       maximum-pool-size: 2
   jpa:
@@ -87,9 +87,9 @@ spring:
   
 # Database Settings
   datasource:
-    url: jdbc:postgresql://academydb-c6-s3-t2-do-user-12484302-0.j.db.ondigitalocean.com:25060/weatherDB
-    username: doadmin
-    password: AVNS_rbprmaa-Ff5w-Icj9EP
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/weatherDB}
+    username: ${DB_USERNAME:}
+    password: ${DB_PASSWORD:}
     hikari:
       maximum-pool-size: 2  
   jpa:

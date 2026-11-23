@@ -9,6 +9,7 @@ on:
 permissions:
   contents: read
   checks: write
+  pull-requests: read # the results action looks up PRs for each commit
 
 jobs:
   build-and-test:
